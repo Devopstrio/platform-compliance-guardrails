@@ -4,7 +4,7 @@
 
 <h1>Platform Compliance Guardrails</h1>
 
-<p><strong>The Enterprise Governance Engine for Policy-as-Code Enforcement, Automated Remediation, and Multi-Cloud Compliance</strong></p>
+<p><strong>The Enterprise Governance Engine for Policy-as-Code Enforcement, Automated Remediation, and Multi-Cloud Compliance.</strong></p>
 
 [![Standard: Policy-as-Code](https://img.shields.io/badge/Standard-Policy--as--Code-emerald.svg?style=for-the-badge&labelColor=000000)]()
 [![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-emerald.svg?style=for-the-badge&labelColor=000000)]()
@@ -13,7 +13,7 @@
 <br/>
 
 > **"Move fast, safely."** 
-> Platform Compliance Guardrails is a mission-critical governance system designed to ensure that every resource deployed in your cloud estate adheres to organizational security standards. By abstracting complex regulatory frameworks (CIS, NIST, ISO) into **Policy-as-Code**, it provides both preventive controls (blocking bad deployments in CI/CD) and detective controls (finding and auto-fixing drift in runtime). It is the bridge between security intent and technical enforcement.
+> **Platform Compliance Guardrails** is a mission-critical governance system designed to ensure every resource in your cloud estate adheres to organizational security standards. By abstracting complex regulatory frameworks (NIST, CIS, HIPAA) into Policy-as-Code, it provides preventive controls in CI/CD and detective self-healing in runtime.
 
 </div>
 
@@ -21,640 +21,263 @@
 
 ## 🏛️ Executive Summary
 
-Cloud scale makes manual compliance audits impossible. By the time an auditor finds a violation, the risk has been present for months. Organizations need a system that acts as an "Automated Auditor" that never sleeps.
+Cloud scale makes manual compliance audits impossible. By the time an auditor finds a violation, the risk has often been present for months, creating significant regulatory exposure. Organizations often fail to secure their platforms because they lack a "Continuous Guardrail" system that acts as an automated, always-on auditor.
 
-This platform provides the **Governance Control Plane**. It utilizes a low-latency **Policy Engine** to evaluate infrastructure changes against a global library of rules. Integrated into **CI/CD pipelines**, it prevents non-compliant Terraform or Kubernetes manifests from ever being applied. For the runtime environment, the **Scanning Engine** identifies drift and triggers the **Remediation Engine** to auto-fix critical vulnerabilities (like public S3 buckets or open SSH ports) without human intervention. It is the fundamental layer for achieving continuous, audit-ready compliance at scale.
-
----
-
-## 📉 The "Compliance Debt" Problem
-
-Without a centralized guardrails system, organizations face:
-- **Security Drift**: Resources that were compliant at deployment being modified manually (Console access), creating silent security gaps.
-- **Fragmented Enforcement**: Different teams using different security standards, leading to inconsistent posture across departments.
-- **Audit Fatigue**: Security and compliance teams spending weeks manually collecting evidence and screenshots for auditors.
-- **High MTTR (Mean Time to Remediation)**: Critical violations (like unencrypted databases) staying active for days while waiting for manual intervention.
+This platform provides the **Governance Control Plane**. It implements a complete **Compliance-as-Code Framework**, enabling Security and Compliance teams to manage institutional guardrails as a first-class citizen. By automating the remediation of security drift and orchestrating real-time CI/CD gates, we ensure that every organizational asset—from databases to clusters—is born compliant, audited for history, and automatically protected against misconfiguration.
 
 ---
 
-## 🚀 Strategic Drivers & Business Outcomes
+## 📐 Architecture Storytelling: Principal Reference Models
 
-### 🎯 Strategic Drivers
-- **Policy-as-Code (PaC)**: Version-controlled, testable security rules that are enforced programmatically across all clouds.
-- **Continuous Compliance Validation**: Moving from "Point-in-Time" audits to "Continuous" validation through real-time scanning and event-driven remediation.
-- **Preventive Guardrails**: Shifting security left by blocking non-compliant code during the pull request phase.
+### 1. Principal Architecture: Global Compliance Guardrails & Governance Plane
+This diagram illustrates the end-to-end flow from framework mapping and policy definition to CI/CD gating, runtime scanning, automated remediation, and institutional auditing.
 
-### 💰 Business Outcomes
-- **Audit Readiness in Minutes**: Automated evidence collection and compliance dashboards reduce audit preparation time by 90%.
-- **Zero-Trust Infrastructure**: Ensuring every resource meets the baseline security requirements before it can interact with the network.
-- **Reduced Operational Risk**: Automated remediation ensures that critical vulnerabilities are neutralized in seconds, not days.
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph FrameworkDesign["Compliance Framework Hub"]
+        direction TB
+        NistMap["NIST 800-53 Mapping"]
+        CisMap["CIS Benchmark Catalog"]
+        HipaaMap["HIPAA Compliance Pack"]
+    end
+
+    subgraph IntelligenceEngine["Governance Intelligence Hub"]
+        direction TB
+        API["FastAPI Compliance Gateway"]
+        Evaluator["Policy-as-Code Evaluator"]
+        ImpactSim["Guardrail Impact Simulator"]
+        Registry["Policy & Exception Registry"]
+    end
+
+    subgraph EnforcementPlane["Enforcement & Remediation Hub"]
+        direction TB
+        Gate["CI/CD Compliance Gate"]
+        Scanner["Real-time Drift Scanner"]
+        Healer["Automated Remediation Engine"]
+    end
+
+    subgraph OperationsHub["Institutional Compliance Hub"]
+        direction TB
+        Scorecard["Global Compliance Scorecard"]
+        Evidence["Automated Evidence Vault"]
+        Audit["Forensic Compliance Lake"]
+    end
+
+    subgraph DevOps["Compliance-as-Code Orchestration"]
+        direction TB
+        TF["Terraform Guardrail Modules"]
+        OPA["Admission Control Policies"]
+        Remedy["Self-Healing Serverless Workers"]
+    end
+
+    %% Flow Arrows
+    FrameworkDesign -->|1. Define Policy| API
+    API -->|2. Translate Logic| Evaluator
+    Evaluator -->|3. Simulate Impact| ImpactSim
+    ImpactSim -->|4. Register Rule| Registry
+    
+    Registry -->|5. Enforce CI/CD| Gate
+    Registry -->|6. Scan Runtime| Scanner
+    Scanner -->|7. Trigger Healing| Healer
+    
+    API -->|8. Visualize Health| Scorecard
+    Scorecard -->|9. Gather Proof| Evidence
+    Scorecard -->|10. Record History| Audit
+    
+    TF -->|11. Provision Hub| IntelligenceEngine
+    Healer -->|12. Execute Fix| Remedy
+    Audit -->|13. Attest Compliance| FrameworkDesign
+
+    %% Styling
+    classDef design fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#e0f2f1,stroke:#004d40,stroke-width:2px;
+    classDef enforcement fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef ops fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
+    classDef devops fill:#fffde7,stroke:#f57f17,stroke-width:2px;
+
+    class FrameworkDesign design;
+    class IntelligenceEngine intel;
+    class EnforcementPlane enforcement;
+    class OperationsHub ops;
+    class DevOps devops;
+```
+
+### 2. The Compliance Lifecycle Management Flow
+The continuous path of a regulatory requirement from initial framework assessment and definition to technical implementation, enforcement, and forensic auditing.
+
+```mermaid
+graph LR
+    Assess["Assess & Map"] --> Define["Define Guardrail"]
+    Define --> Enforce["Preventive/Detective Mode"]
+    Enforce --> Audit["Forensic Compliance Audit"]
+```
+
+### 3. Preventive vs. Detective Guardrail Flow
+Strategic orchestration of "Shift-Left" controls (blocking bad code in CI/CD) and "Runtime-Right" controls (detecting and remediating drift in live environments).
+
+```mermaid
+graph TD
+    Req["Resource Change"] --> Gate["CI/CD Gate (Preventive)"]
+    Gate -->|Non-Compliant| Block["Block Deployment"]
+    Gate -->|Clean| Deploy["Active Resource"]
+    Deploy --> Scan["Drift Scanner (Detective)"]
+    Scan -->|Violation| Heal["Automated Remediation"]
+```
+
+### 4. Multi-Framework Compliance Mapping Hub
+Bridging technical policy rules to global regulatory standards like NIST 800-53, CIS Benchmarks, HIPAA, and SOC2 to ensure unified institutional attestation.
+
+```mermaid
+graph LR
+    Rule["Policy: Encrypt EBS"] --> Nist["NIST SC-28"]
+    Rule --> Cis["CIS AWS 2.2.1"]
+    Rule --> Hipaa["HIPAA §164.312"]
+    Rule --> Map["Unified Compliance Hub"]
+```
+
+### 5. Automated Remediation (Self-Healing) Flow
+Event-driven detection of high-risk security violations (e.g., Public S3 Buckets) and automated execution of neutralization logic without human intervention.
+
+```mermaid
+graph LR
+    Detect["Violation Detected"] --> Verify["Risk Severity Verification"]
+    Verify -->|Critical| Heal["Self-Healing Logic"]
+    Heal --> Revert["Revert to Compliant State"]
+    Revert --> Alert["Security Team Notified"]
+```
+
+### 6. CI/CD Compliance Gate Orchestration
+Implementing automated governance checkpoints within the software delivery pipeline to ensure that no non-compliant infrastructure can reach production.
+
+```mermaid
+graph LR
+    Commit["Git Commit"] --> Pipeline["CI/CD Pipeline"]
+    Pipeline --> Gate["Compliance Gate (OPA)"]
+    Gate -->|Pass| Success["Deployment Success"]
+    Gate -->|Fail| Reject["Deployment Rejected"]
+```
+
+### 7. Institutional Compliance Scorecard
+Grading organizational performance based on key indicators: Framework Adherence, Remediation Velocity, and Policy Exception Density.
+
+```mermaid
+graph TD
+    Post["Compliance Posture: 94%"] --> Risk["Critical Drift: 6%"]
+    Post --- C1["CIS Benchmarks (98%)"]
+    Post --- C2["NIST Adherence (90%)"]
+```
+
+### 8. Identity & RBAC for Compliance Ops
+Managing fine-grained access to guardrail definitions, remediation triggers, and audit evidence between security engineers and compliance auditors.
+
+```mermaid
+graph TD
+    Engineer["Security Engineer"] --> Rules["Manage Guardrail Rules"]
+    Auditor["Compliance Auditor"] --> Proof["Verify Evidence Vault"]
+    Owner["Platform Owner"] --> Exceptions["Approve Policy Exceptions"]
+```
+
+### 9. Policy Impact Assessment (PIA) Flow
+Evaluating the potential organizational impact of a new guardrail by simulating its enforcement against historical resource data (Dry-Run Analysis).
+
+```mermaid
+graph LR
+    New["New Guardrail"] --> Simulator["Dry-Run Simulator"]
+    Simulator --> Data["Historical Cloud Assets"]
+    Data --> Impact["Projected Violation Report"]
+```
+
+### 10. IaC Deployment: Compliance-as-Code Framework
+Using Terraform to deploy and manage the versioned distribution of the compliance engine, scanning workers, and remediation serverless fabric.
+
+```mermaid
+graph LR
+    HCL["Infrastructure Code"] --> TF["Terraform Apply"]
+    TF --> Engine["Compliance Control Plane"]
+    Engine --> Workers["Hardened Scanning Fleet"]
+```
+
+### 11. Metadata Lake for Forensic Compliance Audit
+Storing long-term records of every violation, remediation action, and policy decision for institutional investigation and regulatory audit.
+
+```mermaid
+graph LR
+    Violation["Violation Event"] --> Stream["Forensic Stream"]
+    Stream --> Lake["Compliance Metadata Lake"]
+    Lake --> Trends["Compliance & Drift Trends"]
+```
 
 ---
 
-## 📐 Architecture Storytelling: 80+ Advanced Diagrams
-
-### 1. The Compliance Guardrails Architecture
-*The lifecycle of a policy from definition to enforcement.*
-```mermaid
-graph TD
-    subgraph "Governance Control Plane"
-        Portal[Governance Portal]
-        PolicyDB[(Policy Registry)]
-        Engine[Policy Engine]
-    end
-
-    subgraph "Preventive (Shift Left)"
-        CICD[CI/CD Pipeline]
-        Scanner[IaC Scanner]
-    end
-
-    subgraph "Detective (Runtime)"
-        Events[Cloud Events / CloudTrail]
-        Runtime[Runtime Scanner]
-        Remed[Remediation Engine]
-    end
-
-    subgraph "Cloud Estate"
-        AWS[AWS Resources]
-        Azure[Azure Resources]
-        K8s[Kubernetes Clusters]
-    end
-
-    PolicyDB --> Engine
-    CICD --> Scanner
-    Scanner -->|Consult| Engine
-    Scanner -->|Block/Allow| AWS & Azure & K8s
-    
-    Events --> Runtime
-    Runtime -->|Verify| Engine
-    Runtime -->|Violation Found| Remed
-    Remed -->|Auto-Fix| AWS & Azure & K8s
-    
-    Runtime -->|Evidence| Portal
-```
-
-### 2. Policy Evaluation Flow (OPA Pattern)
-*The logic of a policy decision.*
-```mermaid
-sequenceDiagram
-    participant Pipeline as CI/CD / Runtime
-    participant API as Compliance API
-    participant Engine as Policy Engine
-    participant Library as Policy Library
-    
-    Pipeline->>API: Evaluate Resource (JSON)
-    API->>Engine: Process Context
-    Engine->>Library: Fetch Relevant Rules (CIS/NIST)
-    Library-->>Engine: Rego Rules
-    Engine->>Engine: Match Attributes vs Rules
-    alt Compliant
-        Engine-->>API: Status: ALLOW
-        API-->>Pipeline: Proceed
-    else Non-Compliant
-        Engine-->>API: Status: DENY (Violation: Public S3)
-        API-->>Pipeline: Block Deployment + Notification
-    end
-```
-
-### 3. Automated Remediation Workflow
-*Closing the loop on security violations.*
-```mermaid
-graph TD
-    Detect[Runtime Scanner Finds Violation] --> Verify{Critical Severity?}
-    Verify -->|No| Notify[Send Slack Alert]
-    Verify -->|Yes| Remed[Trigger Remediation Engine]
-    
-    Remed --> Lock[Lock Resource / Revert Change]
-    Lock --> Log[Record Evidence in Audit DB]
-    Log --> Alert[Notify GRC Team: "Auto-Fixed"]
-```
-
-### 4. Compliance Framework Mapping Logic
-```mermaid
-graph LR
-    subgraph "Security Controls"
-        C1[Encrypted Storage]
-        C2[IAM Least Privilege]
-        C3[Network Isolation]
-    end
-    
-    subgraph "Compliance Frameworks"
-        CIS[CIS Benchmarks]
-        NIST[NIST 800-53]
-        ISO[ISO 27001]
-    end
-    
-    C1 --> CIS & NIST & ISO
-    C2 --> NIST & ISO
-    C3 --> CIS & ISO
-```
-
-### 5. Multi-Cloud Abstraction Layer
-```mermaid
-graph TD
-    Engine[Guardrails Engine] --> Abstraction[Cloud Abstraction API]
-    Abstraction --> AWS[AWS SDK]
-    Abstraction --> Azure[Azure SDK]
-    Abstraction --> GCP[GCP SDK]
-```
-
-### 6. Kubernetes Admission Controller (Policy Enforcement)
-```mermaid
-graph LR
-    User[kubectl apply] --> API[K8s API Server]
-    API --> Webhook[Compliance Webhook]
-    Webhook --> Engine[Policy Engine]
-    Engine -->|Deny| API
-    API -->|Error| User
-```
-
-### 7. Drift detection: Baseline vs Runtime
-```mermaid
-graph LR
-    B[Base] --> D[Drif]
-```
-
-### 8. Audit Evidence collection pipeline
-```mermaid
-graph LR
-    A[Audi] --> E[Evid]
-```
-
-### 9. Exception approval workflow
-```mermaid
-graph LR
-    E[Exce] --> A[Appr]
-```
-
-### 10. Risk scoring: Weighted calculation
-```mermaid
-graph LR
-    R[Risk] --> S[Scor]
-```
-
-### 11. CI/CD: Terraform plan validation
-```mermaid
-graph LR
-    C[CICD] --> T[Terr]
-```
-
-### 12. Detective: Real-time event-driven scan
-```mermaid
-graph LR
-    D[Dete] --> R[Real]
-```
-
-### 13. Security: RBAC policy access
-```mermaid
-graph LR
-    S[Secu] --> R[RBAC]
-```
-
-### 14. Governance: Tagging enforcement
-```mermaid
-graph LR
-    G[Gove] --> T[Tagg]
-```
-
-### 15. Framework: CIS Benchmark mapping
-```mermaid
-graph LR
-    F[Fram] --> C[CISB]
-```
-
-### 16. Framework: PCI DSS v4.0 checks
-```mermaid
-graph LR
-    F[Fram] --> P[PCID]
-```
-
-### 17. Multi-tenant: Business unit isolation
-```mermaid
-graph LR
-    M[Mult] --> B[Busi]
-```
-
-### 18. Policy: Least Privilege enforcement
-```mermaid
-graph LR
-    P[Poli] --> L[Leas]
-```
-
-### 19. Policy: Encryption at rest/transit
-```mermaid
-graph LR
-    P[Poli] --> E[Encr]
-```
-
-### 20. Policy: Logging & Monitoring baseline
-```mermaid
-graph LR
-    P[Poli] --> L[Logg]
-```
-
-### 21. Infrastructure: EKS Governance Cluster
-```mermaid
-graph LR
-    I[Infr] --> E[EKSG]
-```
-
-### 22. Infrastructure: RDS Audit Store
-```mermaid
-graph LR
-    I[Infr] --> R[RDSA]
-```
-
-### 23. Infrastructure: Redis Policy Cache
-```mermaid
-graph LR
-    I[Infr] --> R[Redi]
-```
-
-### 24. Infrastructure: Monitoring Stack
-```mermaid
-graph LR
-    I[Infr] --> M[Moni]
-```
-
-### 25. Worker: Scanning orchestrator
-```mermaid
-graph LR
-    W[Work] --> S[Scan]
-```
-
-### 26. Worker: Remediation handler
-```mermaid
-graph LR
-    W[Work] --> R[Reme]
-```
-
-### 27. Worker: Notification dispatcher
-```mermaid
-graph LR
-    W[Work] --> N[Noti]
-```
-
-### 28. API: Policy management
-```mermaid
-graph LR
-    A[API] --> P[Poli]
-```
-
-### 29. API: Compliance dashboard
-```mermaid
-graph LR
-    A[API] --> C[Comp]
-```
-
-### 30. API: Evidence export
-```mermaid
-graph LR
-    A[API] --> E[Evid]
-```
-
-### 31. Frontend: Compliance heatmap
-```mermaid
-graph LR
-    F[Fron] --> C[Comp]
-```
-
-### 32. Frontend: Policy editor
-```mermaid
-graph LR
-    F[Fron] --> P[Poli]
-```
-
-### 33. Frontend: Scan results tree
-```mermaid
-graph LR
-    F[Fron] --> S[Scan]
-```
-
-### 34. Drift detection loop
-```mermaid
-graph LR
-    D[Drif] --> L[Loop]
-```
-
-### 35. Remediation state machine
-```mermaid
-graph LR
-    R[Reme] --> S[Stat]
-```
-
-### 36. Policy: IAM Password Policy
-```mermaid
-graph LR
-    P[Poli] --> I[IAMP]
-```
-
-### 37. Policy: VPC Flow Log enforcement
-```mermaid
-graph LR
-    P[Poli] --> V[VPCF]
-```
-
-### 38. Integration: AWS Security Hub
-```mermaid
-graph LR
-    I[Inte] --> A[AWSS]
-```
-
-### 39. Integration: Azure Security Center
-```mermaid
-graph LR
-    I[Inte] --> A[Azur]
-```
-
-### 40. Integration: GitHub Webhooks
-```mermaid
-graph LR
-    I[Inte] --> G[GitH]
-```
-
-### 41. Monitoring: Grafana Compliance SRI
-```mermaid
-graph LR
-    M[Moni] --> G[Graf]
-```
-
-### 42. Monitoring: Alertmanager violation
-```mermaid
-graph LR
-    M[Moni] --> A[Aler]
-```
-
-### 43. Alert: Critical drift detected
-```mermaid
-graph LR
-    A[Aler] --> C[Crit]
-```
-
-### 44. Alert: Remediation failed
-```mermaid
-graph LR
-    A[Aler] --> R[Reme]
-```
-
-### 45. Scalability: Worker pool autoscaling
-```mermaid
-graph LR
-    S[Scal] --> W[Work]
-```
-
-### 46. Security: OIDC Auth flow
-```mermaid
-graph LR
-    S[Secu] --> O[OIDC]
-```
-
-### 47. Reliability: HA Database config
-```mermaid
-graph LR
-    R[Reli] --> H[HADB]
-```
-
-### 48. Performance: Cached policy evaluation
-```mermaid
-graph LR
-    P[Perf] --> C[Cach]
-```
-
-### 49. Cost: Compliance scan overhead
-```mermaid
-graph LR
-    C[Cost] --> C[Comp]
-```
-
-### 50. Devops: CI/CD compliance validation
-```mermaid
-graph LR
-    D[Devo] --> C[CICD]
-```
-
-### 51. Workflow: New framework onboarding
-```mermaid
-graph LR
-    W[Work] --> N[NewF]
-```
-
-### 52. Workflow: Emergency exception bypass
-```mermaid
-graph LR
-    W[Work] --> E[Emer]
-```
-
-### 53. Workflow: Quarterly compliance review
-```mermaid
-graph LR
-    W[Work] --> Q[Quar]
-```
-
-### 54. Workflow: Automated evidence upload
-```mermaid
-graph LR
-    W[Work] --> A[Auto]
-```
-
-### 55. Component: Policy Evaluator
-```mermaid
-graph LR
-    C[Comp] --> P[Poli]
-```
-
-### 56. Component: Remediation Runner
-```mermaid
-graph LR
-    C[Comp] --> R[Reme]
-```
-
-### 57. Component: Audit Logger
-```mermaid
-graph LR
-    C[Comp] --> A[Audi]
-```
-
-### 58. Component: Resource Inventory
-```mermaid
-graph LR
-    C[Comp] --> R[Reso]
-```
-
-### 59. Data Model: Framework Entity
-```mermaid
-graph LR
-    D[Data] --> F[Fram]
-```
-
-### 60. Data Model: Policy Entity
-```mermaid
-graph LR
-    D[Data] --> P[Poli]
-```
-
-### 61. Data Model: Scan Result
-```mermaid
-graph LR
-    D[Data] --> S[Scan]
-```
-
-### 62. Logic: Priority scan queue
-```mermaid
-graph LR
-    L[Logi] --> P[Prio]
-```
-
-### 63. Logic: Weighted risk model
-```mermaid
-graph LR
-    L[Logi] --> W[Weig]
-```
-
-### 64. Logic: Exception expiry check
-```mermaid
-graph LR
-    L[Logi] --> E[Exce]
-```
-
-### 65. Logic: Remediation validation
-```mermaid
-graph LR
-    L[Logi] --> R[Reme]
-```
-
-### 66. UI: Sidebar navigation
-```mermaid
-graph LR
-    U[UI] --> S[Side]
-```
-
-### 67. UI: Risk heatmap chart
-```mermaid
-graph LR
-    U[UI] --> R[Risk]
-```
-
-### 68. UI: Policy versioning view
-```mermaid
-graph LR
-    U[UI] --> P[Poli]
-```
-
-### 69. UI: Real-time violation feed
-```mermaid
-graph LR
-    U[UI] --> R[Real]
-```
-
-### 70. UI: Auditor evidence portal
-```mermaid
-graph LR
-    U[UI] --> A[Audi]
-```
-
-### 71. SRE: Compliance monitoring dashboard
-```mermaid
-graph LR
-    S[SRE] --> C[Comp]
-```
-
-### 72. SRE: Incident response integration
-```mermaid
-graph LR
-    S[SRE] --> I[Inci]
-```
-
-### 73. SRE: Automated backup validation
-```mermaid
-graph LR
-    S[SRE] --> A[Auto]
-```
-
-### 74. Arch: Layered Governance model
-```mermaid
-graph LR
-    A[Arch] --> L[Laye]
-```
-
-### 75. Arch: Multi-cloud bridge
-```mermaid
-graph LR
-    A[Arch] --> M[Mult]
-```
-
-### 76. Arch: Security-first baseline
-```mermaid
-graph LR
-    A[Arch] --> S[Secu]
-```
-
-### 77. Feature: Custom policy SDK
-```mermaid
-graph LR
-    F[Feat] --> C[Cust]
-```
-
-### 78. Feature: Third-party API integration
-```mermaid
-graph LR
-    F[Feat] --> T[Thir]
-```
-
-### 79. Feature: Compliance self-healing
-```mermaid
-graph LR
-    F[Feat] --> C[Comp]
-```
-
-### 80. Enterprise Compliance Maturity
-```mermaid
-graph LR
-    E[Entr] --> C[Comp]
-```
+## 🏛️ Core Compliance Pillars
+
+1.  **Policy-as-Code (PaC)**: Version-controlled, testable security rules that operate across all cloud providers.
+2.  **Continuous Self-Healing**: Event-driven remediation of critical security violations in seconds, not days.
+3.  **Preventive Guardrails**: Shifting security left by blocking non-compliant code at the pull request phase.
+4.  **Multi-Framework Attestation**: Unified mapping to NIST, CIS, HIPAA, and ISO for institutional audit readiness.
+5.  **Exception Lifecycle Management**: Formal, time-bound approval workflows for authorized policy deviations.
+6.  **Full Auditability**: Immutable recording of every scan result and remediation action for institutional record-keeping.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
-### Policy Engine & APIs
-- **Framework**: Python 3.11+ / FastAPI.
-- **Policy Core**: Custom Python-based OPA simulation with support for complex logic and Rego-like structures.
-- **Queue**: Redis for asynchronous scanning and remediation tasks.
-- **Persistence**: PostgreSQL for policy registry, audit logs, and exception metadata.
-- **Scan Engines**: Multi-threaded scanning for IaC (Terraform) and Runtime (Cloud APIs).
+### Compliance Engine & APIs
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Evaluation Core**: Multi-mode engine for evaluating infrastructure against versioned policy libraries.
+*   **Remediation Runner**: Serverless fabric for executing automated fixes across AWS, Azure, and GCP.
+*   **Framework Mapper**: Logic for mapping technical rules to regulatory controls (NIST/CIS).
+*   **State Management**: PostgreSQL (Metadata Lake) and Redis (Scan Cache).
 
-### Frontend (Compliance Dashboard)
-- **Framework**: React 18 / Vite.
-- **Theme**: Dark, Emerald, Slate (Professional GRC aesthetic).
-- **Visualization**: Recharts for compliance score trends and risk heatmaps.
+### Compliance Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Dark, Emerald, Slate (Professional GRC aesthetic).
+*   **Visualization**: Recharts for compliance score trends, risk heatmaps, and remediation velocity.
 
-### Infrastructure
-- **Runtime**: AWS EKS (Kubernetes).
-- **IaC**: Terraform (Modular with EKS/Audit focus).
-- **Remediation**: Serverless workers (simulated) for auto-fixing cloud resources.
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS).
+*   **IaC**: Modular Terraform for deploying the governance hub and scanning fleet distributions.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/gov_hub`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/scanners`** | Multi-cloud drift detectors | Lambda, AWS Config, CloudTrail |
+| **`infrastructure/remedy`** | Self-healing serverless fabric | Lambda, Step Functions, KMS |
+| **`infrastructure/auditing`** | Forensic compliance sinks | S3, Athena, Quicksight |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the compliance platform
 git clone https://github.com/devopstrio/platform-compliance-guardrails.git
 cd platform-compliance-guardrails
 
-# Setup environment
+# Configure environment
 cp .env.example .env
 
-# Launch the compliance stack (API, Scanning Engine, DB, Redis, UI)
+# Launch the Compliance stack
 make up
 
-# Run a mock IaC compliance scan
+# Run a mock compliance scan simulation
 make scan-iac
 ```
+
 Access the Compliance Dashboard at `http://localhost:3000`.
 
 ---
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<div align="center">
+  <p>© 2026 Devopstrio. All rights reserved.</p>
+</div>
